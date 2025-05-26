@@ -1332,6 +1332,11 @@
               <FileType>1</FileType>
               <FilePath>src\nRF5_SDK_17.1.0\modules\nrfx\drivers\src\nrfx_timer.c</FilePath>
             </File>
+            <File>
+              <FileName>nrfx_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\nRF5_SDK_17.1.0\modules\nrfx\drivers\src\nrfx_pwm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4540,6 +4545,11 @@
               <FileName>nrfx_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>src\nRF5_SDK_17.1.0\modules\nrfx\drivers\src\nrfx_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrfx_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\nRF5_SDK_17.1.0\modules\nrfx\drivers\src\nrfx_pwm.c</FilePath>
             </File>
           </Files>
         </Group>

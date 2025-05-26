@@ -33,6 +33,8 @@ static void lfclk_config(void){
 }
 
 
+
+
 /**@brief Function for application main entry.
  */
 int main(void){
@@ -59,9 +61,10 @@ int main(void){
 	nrf_gpio_cfg_output(WING1_LED_CTRL_PIN);
 	nrf_gpio_cfg_output(WING2_LED_CTRL_PIN);
 	nrf_gpio_cfg_output(RGB_COMMON_PIN);
+	
 	nrf_gpio_cfg_output(LED_R_PIN);
 
-nrf_gpio_cfg_output(LED_B_PIN);
+	nrf_gpio_cfg_output(LED_B_PIN);
 	
 	nrf_gpio_pin_write(RGB_COMMON_PIN, 1);
 	nrf_gpio_pin_write(LED_R_PIN, 1);

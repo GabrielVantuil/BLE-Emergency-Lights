@@ -1,11 +1,17 @@
 #include "handles.h"
 #include "utils.h"
 
-#include "app_pwm.h"
+#define PWM_CLK_FREQ 125000
+static nrfx_pwm_t m_pwm0 = NRFX_PWM_INSTANCE(0);
+static nrf_pwm_values_individual_t seq_values;
 
-APP_PWM_INSTANCE(PWM0,0);
-APP_PWM_INSTANCE(PWM1,1);
-//APP_PWM_INSTANCE(PWM2,2);
+static nrf_pwm_sequence_t const seq = {
+    .values.p_individual = &seq_values,
+    .length              = NRF_PWM_VALUES_LENGTH(seq_values),
+    .repeats             = 0,
+    .end_delay           = 0
+};
+
 bool ledPowerLocked;
 
 void timers_init(void){
@@ -15,22 +21,45 @@ void timers_init(void){
 }
 
 void setLed(bool val){
-	app_pwm_uninit(&PWM1);
-	nrf_gpio_cfg_output(MAIN_LED_CTRL_PIN);
-    nrf_gpio_pin_write(MAIN_LED_CTRL_PIN, val);
+	if(val)	setLedPwm(1000000, 100);
+	else	setLedPwm(1000000, 0);
 }
 
 void setLedOff(void * p_context){
 	if(ledPowerLocked) return;
 	setLed(LED_OFF);
 }
-void pwm_ready_callback(uint32_t pwm_id){}
-void setLedPwm(uint32_t freqX1000, uint16_t duty){	
-	app_pwm_uninit(&PWM1);
-    app_pwm_config_t pwm1_cfg = APP_PWM_DEFAULT_CONFIG_1CH(1000000000/freqX1000, MAIN_LED_CTRL_PIN);
-    APP_ERROR_CHECK(app_pwm_init(&PWM1, &pwm1_cfg, pwm_ready_callback));
-    app_pwm_enable(&PWM1);
-	while (app_pwm_channel_duty_set(&PWM1, 0, 100-duty) == NRF_ERROR_BUSY);
+
+void setLedPwm(uint32_t mHertz, uint16_t duty){	
+	uint32_t top_value;
+	if((PWM_CLK_FREQ/(mHertz/1000)) >= 65535) top_value = 65535;	// "top_value" is a uint16_t, max value = 65536, 
+	else top_value = PWM_CLK_FREQ/(mHertz/1000);	//for 125kHz, 125 = 1000kHz
+	
+    nrfx_pwm_uninit(&m_pwm0);
+	nrfx_pwm_config_t const config0 = {
+		.output_pins = {
+			MAIN_LED_CTRL_PIN,
+			//WING1_LED_CTRL_PIN,
+			//WING2_LED_CTRL_PIN,
+			NRFX_PWM_PIN_NOT_USED,
+			NRFX_PWM_PIN_NOT_USED,
+			NRFX_PWM_PIN_NOT_USED  // channel 3
+		},
+		.irq_priority = NRFX_PWM_DEFAULT_CONFIG_IRQ_PRIORITY,
+		.base_clock   = NRF_PWM_CLK_125kHz,
+		.count_mode   = NRF_PWM_MODE_UP,
+		.top_value    = top_value,                  // Period = (1000Hz)
+		.load_mode    = NRF_PWM_LOAD_INDIVIDUAL,
+		.step_mode    = NRF_PWM_STEP_AUTO
+	};
+		
+    APP_ERROR_CHECK(nrfx_pwm_init(&m_pwm0, &config0, NULL));
+	
+    seq_values.channel_0 = top_value*(100-duty)/100;
+    seq_values.channel_1 = seq_values.channel_0;
+    seq_values.channel_2 = seq_values.channel_0;
+
+    nrfx_pwm_simple_playback(&m_pwm0, &seq, 1, NRFX_PWM_FLAG_LOOP);
 }
 
 void lock_handler           (uint16_t conn_handle, ble_torch_s_t * p_torch_s, uint8_t lock){
