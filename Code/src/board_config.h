@@ -32,4 +32,12 @@
 #define LDR_PIN         28
 #define RGB_COMMON_PIN  25
 
+#define VBAT_SAADC_CH		0
+#define LED_SHUNT_SAADC_CH	1
+#define VDD_SAADC_CH		2
+
+#define VBAT_APIN 		NRF_SAADC_INPUT_AIN2
+#define LED_SHUNT_APIN 	NRF_SAADC_INPUT_AIN3
+
+
 #endif

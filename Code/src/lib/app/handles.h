@@ -3,32 +3,24 @@
 #include "nrf_drv_gpiote.h"
 #include "ble_torch_s.h"
 #include "parameters.h"
-#include "app_timer.h"
 #include "nrf_pwr_mgmt.h"
 #include "app_ble.h"
-#include "nrf_delay.h"
-#include "nrfx_pwm.h"
-#include "nrf_gpio.h"
+#include "app.h"
+
 
 APP_TIMER_DEF(power_off_led_timer_id);
+APP_TIMER_DEF(check_bat_timer_id);
+APP_TIMER_DEF(update_info_timer_id);
 
 void timers_init(void);
 void startTimers(void);
-void setLed(bool val);
-void blinkLed(uint8_t led);
-
-void setLedOff(void * p_context);
-void setLedPwm(uint32_t mHertz, uint16_t duty);
-void lock_handler           (uint16_t conn_handle, ble_torch_s_t * p_torch_s, uint8_t lock);
-void led_power_handler      (uint16_t conn_handle, ble_torch_s_t * p_torch_s, const uint8_t *params);
-void led_pwm_handler       	(uint16_t conn_handle, ble_torch_s_t * p_torch_s, const uint8_t *params);
-
-void blinkLedHandler(void * p_context);
 
 void connectionTimeout(void * p_context);
 
-void leds_init(void);
 
+void lock_handler           (uint16_t conn_handle, ble_torch_s_t * p_torch_s, uint8_t lock);
+void led_power_handler      (uint16_t conn_handle, ble_torch_s_t * p_torch_s, const uint8_t *params);
+void led_pwm_handler       	(uint16_t conn_handle, ble_torch_s_t * p_torch_s, const uint8_t *params);
 void idle_state_handle(void);
 void in_pin_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action);
 

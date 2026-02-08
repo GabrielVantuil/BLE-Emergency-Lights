@@ -424,6 +424,11 @@
               <FileType>5</FileType>
               <FilePath>src\lib\utils.h</FilePath>
             </File>
+            <File>
+              <FileName>app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>src\lib\app\app.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3637,6 +3642,11 @@
               <FileName>utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>src\lib\utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>src\lib\app\app.c</FilePath>
             </File>
           </Files>
         </Group>

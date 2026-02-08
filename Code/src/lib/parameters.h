@@ -7,10 +7,10 @@
 #define APP_BLE_OBSERVER_PRIO           3                                		/**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG            1                                		/**< A tag identifying the SoftDevice BLE configuration. */
 
-#define APP_ADV_INTERVAL                MSEC_TO_UNITS(500, UNIT_0_625_MS)		/**< The advertising interval (in units of 0.625 ms; this value corresponds to 40 ms). */
+#define APP_ADV_INTERVAL                MSEC_TO_UNITS(50, UNIT_0_625_MS)		/**< The advertising interval (in units of 0.625 ms; this value corresponds to 40 ms). */
 #define APP_ADV_DURATION                0								 		/**< The advertising time-out (in units of 10ms). When set to 0, we will never time out. */
 
-#define MIN_CONN_INTERVAL               MSEC_TO_UNITS(100, UNIT_1_25_MS)  		/**< Minimum acceptable connection interval */
+#define MIN_CONN_INTERVAL               MSEC_TO_UNITS(50, UNIT_1_25_MS)  		/**< Minimum acceptable connection interval */
 #define MAX_CONN_INTERVAL               MSEC_TO_UNITS(200, UNIT_1_25_MS)  		/**< Maximum acceptable connection interval */
 #define SLAVE_LATENCY                   0                                		/**< Slave latency. */
 #define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)  		/**< Connection supervisory time-out (recommended 4x MAX_CONN_INTERVAL). */	

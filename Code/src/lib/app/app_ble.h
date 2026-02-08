@@ -23,6 +23,7 @@
 #include "nrf_ble_qwr.h"
 #include "parameters.h"
 #include "handles.h"
+#include "Battery_level.h"
 
 #define DEAD_BEEF                       0xDEADBEEF                              /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
@@ -44,6 +45,9 @@ void conn_params_init(void);
 void advertising_start(void);
 void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context);
 void ble_stack_init(void);
+
+void updateInfoPayload(void * p_context);
+
 
 inline bool getIsConnected(){return isConnected;}
 

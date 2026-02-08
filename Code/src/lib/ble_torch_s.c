@@ -88,7 +88,7 @@ uint32_t ble_torch_s_init(ble_torch_s_t * p_torch_s, const ble_torch_s_init_t * 
     err_code = configAndAddChar(p_torch_s, TORCH_S_UUID_LED_PWM_CHAR        , 10, 1, &p_torch_s->led_pwm_handles);
     if (err_code != NRF_SUCCESS)	return err_code;
 
-    err_code = configAndAddChar(p_torch_s, TORCH_S_UUID_READ_LDR_CHAR       , 1, 0, &p_torch_s->read_ldr_handles);		//find out th do th, &p_torch_s->read_ldr_handlesis
+    err_code = configAndAddChar(p_torch_s, TORCH_S_UUID_READ_LDR_CHAR       , 5, 0, &p_torch_s->read_info_handles);		//find out th do th, &p_torch_s->read_ldr_handlesis
     if (err_code != NRF_SUCCESS)	return err_code;
 	
     return err_code;

@@ -285,3 +285,23 @@ void ble_stack_init(void){
     // Register a handler for BLE events.
     NRF_SDH_BLE_OBSERVER(m_ble_observer, APP_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 }
+
+
+void updateInfoPayload(void * p_context){
+	uint8_t payload[5];
+	payload[0] = getBatteryLevel();
+	payload[1] = 0;	//LDR
+	payload[2] = 0;
+	payload[3] = 0;
+	payload[4] = 0;
+	ble_gatts_value_t gatts_value;
+	memset(&gatts_value, 0, sizeof(gatts_value));		
+	gatts_value.p_value = payload;
+	gatts_value.len = sizeof(payload);
+	gatts_value.offset  = 0;
+    uint32_t err_code = sd_ble_gatts_value_set(BLE_CONN_HANDLE_INVALID, m_torch_s.read_info_handles.value_handle, &gatts_value);
+	if (err_code != NRF_SUCCESS){		
+		NRF_LOG_INFO("ERROR setting value %d", err_code);
+		return;
+	}
+}

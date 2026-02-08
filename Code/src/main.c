@@ -7,10 +7,6 @@
 
 #include "nrf_drv_gpiote.h"
 
-#include "nrf_log.h"
-#include "nrf_log_ctrl.h"
-#include "nrf_log_default_backends.h"
-
 #include "nrf_drv_clock.h"
 #include "nrf_delay.h"
 
@@ -34,7 +30,6 @@ static void lfclk_config(void){
 
 
 
-
 /**@brief Function for application main entry.
  */
 int main(void){
@@ -49,27 +44,13 @@ int main(void){
     services_init();
     advertising_init();
     conn_params_init();
-//	calcBatteryLevel(NULL);
 	// sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, m_adv_handle, 4);
 	
     // Start execution.
 	advertising_start();
+	gpio_init();
 	
-	setLedPwm(1000000, 50);
-	
-	nrf_gpio_cfg_output(MAIN_LED_CTRL_PIN);
-	nrf_gpio_cfg_output(WING1_LED_CTRL_PIN);
-	nrf_gpio_cfg_output(WING2_LED_CTRL_PIN);
-	nrf_gpio_cfg_output(RGB_COMMON_PIN);
-	
-	nrf_gpio_cfg_output(LED_R_PIN);
-
-	nrf_gpio_cfg_output(LED_B_PIN);
-	
-	nrf_gpio_pin_write(RGB_COMMON_PIN, 1);
-	nrf_gpio_pin_write(LED_R_PIN, 1);
-	nrf_gpio_pin_write(LED_G_PIN, 1);
-	nrf_gpio_pin_write(LED_B_PIN, 1);
+	uint32_t count = 0;
     // Enter main loop.
     for (;;){
 		nrf_gpio_pin_write(LED_G_PIN, !getIsConnected());
@@ -79,6 +60,7 @@ int main(void){
 		nrf_gpio_pin_write(RGB_COMMON_PIN, 0);
 		nrf_delay_us(100);
 //        idle_state_handle();
+		NRF_LOG_FLUSH();
     }
 }
 

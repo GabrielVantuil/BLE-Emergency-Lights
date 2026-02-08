@@ -52,7 +52,7 @@ struct ble_torch_s_s{
     ble_gatts_char_handles_t    lock_handles; 
     ble_gatts_char_handles_t    led_power_handles;
     ble_gatts_char_handles_t    led_pwm_handles;
-    ble_gatts_char_handles_t    read_ldr_handles;  
+    ble_gatts_char_handles_t    read_info_handles;  
 	
     uint8_t                     uuid_type;                              /**< UUID type for the Tag Service. */
     ble_torch_s_lock_handler_t				lock_handler;
